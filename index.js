@@ -13,8 +13,7 @@ App.get((req,res)=>{
 
 App.use("/cources",courcesrouter)
 App.use("/users",usersrouter)
-App.use("/users/:id",usersrouter)
-App.use("/users/auth",authrouter)
+App.use("/auth",authrouter)
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
 App.listen(5000, (err) => {

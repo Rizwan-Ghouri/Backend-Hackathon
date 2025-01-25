@@ -2,39 +2,39 @@ const usermodel = require("../models/Usermodel");
 const bcrypt = require('bcrypt');
 // const UserModel = require('../models/Usermodel');
 
-const getUserWithAuth = async (req, res) => {
-    try {
-        const userId = req.params.id; // Ensure dynamic param
+// const getUserWithAuth = async (req, res) => {
+//     try {
+//         const userId = req.params.id; // Ensure dynamic param
 
-        // Validate ObjectId
-        if (!mongoose.Types.ObjectId.isValid(userId)) {
-            return res.status(400).send({
-                isSuccessfull: false,
-                message: "Invalid ID format"
-            });
-        }
+//         // Validate ObjectId
+//         if (!mongoose.Types.ObjectId.isValid(userId)) {
+//             return res.status(400).send({
+//                 isSuccessfull: false,
+//                 message: "Invalid ID format"
+//             });
+//         }
 
-        // Query with Population
-        const user = await UserModel.findById(userId).populate('authId');
+//         // Query with Population
+//         const user = await UserModel.findById(userId).populate('authId');
 
-        if (!user) {
-            return res.status(404).send({
-                isSuccessfull: false,
-                message: "User not found"
-            });
-        }
+//         if (!user) {
+//             return res.status(404).send({
+//                 isSuccessfull: false,
+//                 message: "User not found"
+//             });
+//         }
 
-        res.status(200).send({
-            isSuccessfull: true,
-            data: user
-        });
-    } catch (error) {
-        res.status(500).send({
-            isSuccessfull: false,
-            message: error.message
-        });
-    }
-};
+//         res.status(200).send({
+//             isSuccessfull: true,
+//             data: user
+//         });
+//     } catch (error) {
+//         res.status(500).send({
+//             isSuccessfull: false,
+//             message: error.message
+//         });
+//     }
+// };
 
 // module.exports = getUserWithAuth ;
 
