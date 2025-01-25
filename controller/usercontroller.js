@@ -2,33 +2,33 @@ const usermodel = require("../models/Usermodel");
 const bcrypt = require('bcrypt');
 // const UserModel = require('../models/Usermodel');
 
-// const getUserWithAuth = async (req, res) => {
-//     try {
-//         const userId = req.params.userId;
+const getUserWithAuth = async (req, res) => {
+    try {
+        const userId = req.params.userId;
 
-//         // Find user and populate auth data
-//         const user = await usermodel.findById(userId).populate('authId');
+        // Find user and populate auth data
+        const user = await usermodel.findById(userId).populate('authId');
         
-//         if (!user) {
-//             return res.status(404).send({
-//                 isSuccessfull: false,
-//                 message: 'User not found'
-//             });
-//         }
+        if (!user) {
+            return res.status(404).send({
+                isSuccessfull: false,
+                message: 'User not found'
+            });
+        }
 
-//         res.status(200).send({
-//             isSuccessfull: true,
-//             data: user
-//         });
-//     } catch (error) {
-//         res.status(400).send({
-//             isSuccessfull: false,
-//             message: error.message
-//         });
-//     }
-// };
+        res.status(200).send({
+            isSuccessfull: true,
+            data: user
+        });
+    } catch (error) {
+        res.status(400).send({
+            isSuccessfull: false,
+            message: error.message
+        });
+    }
+};
 
-// module.exports = { getUserWithAuth };
+// module.exports = getUserWithAuth ;
 
 const usercontroller = {
     get: async (req,res)=>{
@@ -145,4 +145,4 @@ const usercontroller = {
     },
 }
 
-module.exports = {usercontroller}
+module.exports = {usercontroller,getUserWithAuth};
