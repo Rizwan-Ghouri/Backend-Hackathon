@@ -5,7 +5,6 @@ const courcesrouter = require("./routers/courserouter")
 const usersrouter = require("./routers/userrouter")
 const authrouter = require("./routers/authrouter")
 const cors = require("cors")
-const parser = require("body-parser")
 
 const App = express();
 App.use(express.json());
@@ -16,7 +15,6 @@ App.use(cors({
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true
 }));
-// App.use(parser());
 
 App.get((req,res)=>{
     res.send("Hello world")
