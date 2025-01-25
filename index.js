@@ -7,6 +7,10 @@ const authrouter = require("./routers/authrouter")
 const App = express();
 App.use(express.json());
 
+App.get((req,res)=>{
+    res.send("Hello world")
+})
+
 App.use("/cources",courcesrouter)
 App.use("/users",usersrouter)
 App.use("/users/auth",authrouter)
