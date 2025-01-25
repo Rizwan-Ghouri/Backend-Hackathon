@@ -16,8 +16,8 @@ App.use(cors({
   credentials: true
 }));
 
-App.get((req,res)=>{
-    res.send("Hello world")
+App.get("/",(req,res)=>{
+    res.send("Hello world , /user, /cources")
 })
 
 App.use("/cources",courcesrouter)
