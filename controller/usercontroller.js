@@ -40,24 +40,21 @@ const { SignUp, login } = require("./authcontroller");
 // module.exports = getUserWithAuth ;
 
 const usercontroller = {
-    get:()=>{
-        login();
+    get: async (req,res)=>{
+        try {
+            const result = await usermodel.find({})
+            res.status(200).send({
+                isSuccessfull:true,
+                data: result
+            })
+        } catch (error) {
+            res.status(400).send({
+                isSuccessfull:false,
+                message:error.message,
+                data:error
+            })
+        }
     },
-    // get: async (req,res)=>{
-    //     try {
-    //         const result = await usermodel.find({})
-    //         res.status(200).send({
-    //             isSuccessfull:true,
-    //             data: result
-    //         })
-    //     } catch (error) {
-    //         res.status(400).send({
-    //             isSuccessfull:false,
-    //             message:error.message,
-    //             data:error
-    //         })
-    //     }
-    // },
     getById:async (req,res)=>{
         try {
             const id = req.params.id
@@ -76,46 +73,44 @@ const usercontroller = {
             })
         }
     },
-    add:()=>{
-        SignUp();
+   
+    add: async (req, res) => {
+        try {
+            const body = req.body;
+    
+            // Password Hashing
+            const saltRounds = 8;
+            const hashedPassword = await bcrypt.hash(body.password, saltRounds);
+    
+            const userObj = {
+                username: body.username,
+                email: body.email,
+                password: hashedPassword // Save hashed password
+            };
+    
+            const resObj = new usermodel({ ...userObj });
+    
+            resObj.save().then((dbRes) => {              
+                res.status(201).send({
+                    isSuccessfull: true,
+                    data: dbRes,
+                    message: "User added successfully"
+                });
+            }).catch((saveError) => {
+                res.status(400).send({
+                    isSuccessfull: false,
+                    message: saveError.message,
+                    data: saveError
+                });
+            });
+        } catch (error) {
+            res.status(400).send({
+                isSuccessfull: false,
+                message: error.message,
+                data: error
+            });
+        }
     },
-    // add: async (req, res) => {
-    //     try {
-    //         const body = req.body;
-    
-    //         // Password Hashing
-    //         const saltRounds = 8;
-    //         const hashedPassword = await bcrypt.hash(body.password, saltRounds);
-    
-    //         const userObj = {
-    //             username: body.username,
-    //             email: body.email,
-    //             password: hashedPassword // Save hashed password
-    //         };
-    
-    //         const resObj = new usermodel({ ...userObj });
-    
-    //         resObj.save().then((dbRes) => {              
-    //             res.status(201).send({
-    //                 isSuccessfull: true,
-    //                 data: dbRes,
-    //                 message: "User added successfully"
-    //             });
-    //         }).catch((saveError) => {
-    //             res.status(400).send({
-    //                 isSuccessfull: false,
-    //                 message: saveError.message,
-    //                 data: saveError
-    //             });
-    //         });
-    //     } catch (error) {
-    //         res.status(400).send({
-    //             isSuccessfull: false,
-    //             message: error.message,
-    //             data: error
-    //         });
-    //     }
-    // },
     
     edit:async (req,res)=>{
         try {
